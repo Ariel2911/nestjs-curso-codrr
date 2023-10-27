@@ -10,6 +10,8 @@ async function bootstrap() {
 
   const ConfigServices = app.get(ConfigService);
 
+  app.setGlobalPrefix('api');
+
   await app.listen(ConfigServices.get('PORT'));
 }
 bootstrap();
