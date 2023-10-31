@@ -10,9 +10,9 @@ export class UserEntity extends BaseEntity implements IUser {
   lastName: string;
   @Column()
   age: number;
-  @Column()
+  @Column({ unique: true })
   email: string;
-  @Column()
+  @Column({ unique: true })
   username: string;
   @Column()
   password: string;
