@@ -10,11 +10,13 @@ async function bootstrap() {
 
   app.use(morgan('dev'));
 
-  app.useGlobalFilters(new ValidationPipe({
-    transformOptions: {
-      enableImplicitConversion: true;
-    }
-  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transformOptions: {
+        enableImplicitConversion: true,
+      },
+    }),
+  );
 
   const ConfigServices = app.get(ConfigService);
 
