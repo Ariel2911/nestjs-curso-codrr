@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/users.entity';
-import { Repository } from 'typeorm';
-import { UserDTO } from '../dto/user.dto';
+import { Repository, UpdateResult } from 'typeorm';
+import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
 
 @Injectable()
 export class UsersService {
@@ -33,6 +33,21 @@ export class UsersService {
         .createQueryBuilder('user')
         .where({ id })
         .getOne();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  public async updateUser(
+    body: UserUpdateDTO,
+    id: string,
+  ): Promise<UpdateResult | undefined> {
+    try {
+      const user: UpdateResult = await this.userRepository.update(id, body);
+      if (user.affected === 0) {
+        return undefined;
+      }
+      return user;
     } catch (error) {
       throw new Error(error);
     }
