@@ -18,4 +18,12 @@ export class UsersService {
       throw new Error(error);
     }
   }
+
+  public async findUsers(): Promise<UserEntity[]> {
+    try {
+      return await this.userRepository.find();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
