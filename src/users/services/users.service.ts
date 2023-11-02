@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../entities/users.entity';
-import { Repository, UpdateResult } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { UserDTO, UserUpdateDTO } from '../dto/user.dto';
 
 @Injectable()
@@ -44,6 +44,18 @@ export class UsersService {
   ): Promise<UpdateResult | undefined> {
     try {
       const user: UpdateResult = await this.userRepository.update(id, body);
+      if (user.affected === 0) {
+        return undefined;
+      }
+      return user;
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  public async deleteUser(id: string): Promise<DeleteResult | undefined> {
+    try {
+      const user: DeleteResult = await this.userRepository.delete(id);
       if (user.affected === 0) {
         return undefined;
       }
