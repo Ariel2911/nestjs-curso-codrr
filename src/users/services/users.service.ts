@@ -26,4 +26,15 @@ export class UsersService {
       throw new Error(error);
     }
   }
+
+  public async findUserById(id: string): Promise<UserEntity> {
+    try {
+      return await this.userRepository
+        .createQueryBuilder('user')
+        .where({ id })
+        .getOne();
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
 }
